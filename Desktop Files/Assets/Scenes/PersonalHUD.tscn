@@ -1,0 +1,358 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://Assets/Scripts/PersonalHud.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_under.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_progress.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_normal.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_hover.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_denied.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Graphics/Fonts/StoneWalls.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_progress_antivirus.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Graphics/HUD/hexagon_progress_data.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_normal.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_hover.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_pressed.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_invert_normal.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_invert_hover.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Graphics/HUD/half-hex_invert_pressed.png" type="Texture" id=16]
+
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 280
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 8 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 200
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 8 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[node name="PersonalHud" type="CanvasLayer"]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+script = ExtResource( 1 )
+
+[node name="RestActionProgress" type="TextureProgress" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = -12.0
+margin_right = 979.0
+margin_bottom = 1012.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 0.5
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 2 )
+texture_over = null
+texture_progress = ExtResource( 3 )
+fill_mode = 5
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Rect" ]
+
+[node name="RestActionButton" type="TextureButton" parent="." index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = -12.0
+margin_right = 979.0
+margin_bottom = 1012.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+texture_disabled = ExtResource( 7 )
+
+[node name="RestLabel" type="Label" parent="RestActionButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 167.0
+margin_top = 233.0
+margin_right = 833.0
+margin_bottom = 833.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "REST"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="CodeActionProgress" type="TextureProgress" parent="." index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = 16.0
+margin_right = 979.0
+margin_bottom = 1040.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 2 )
+texture_over = null
+texture_progress = ExtResource( 9 )
+fill_mode = 4
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="PatchProgress" type="TextureProgress" parent="." index="3"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = 16.0
+margin_right = 979.0
+margin_bottom = 1040.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+page = 0.0
+value = 0.0
+exp_edit = false
+rounded = false
+texture_under = ExtResource( 2 )
+texture_over = null
+texture_progress = ExtResource( 10 )
+fill_mode = 4
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+nine_patch_stretch = false
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="CodeActionButton" type="TextureButton" parent="." index="4"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = 16.0
+margin_right = 979.0
+margin_bottom = 1040.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+texture_hover = ExtResource( 6 )
+texture_disabled = ExtResource( 7 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="CodeLabel" type="Label" parent="CodeActionButton" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 268.0
+margin_top = 395.0
+margin_right = 778.0
+margin_bottom = 695.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "Code"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="AntiVirusAction" type="TextureButton" parent="." index="5"]
+
+editor/display_folded = true
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = 16.0
+margin_right = 979.0
+margin_bottom = 1040.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0, -0.3 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+disabled = true
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+texture_hover = ExtResource( 13 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="CodeLabel" type="Label" parent="AntiVirusAction" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 204.0
+margin_top = 285.0
+margin_right = 1178.0
+margin_bottom = 585.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "ANTI-VIRUS"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[node name="PatchAction" type="TextureButton" parent="." index="6"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -45.0
+margin_top = 29.0
+margin_right = 979.0
+margin_bottom = 1053.0
+rect_scale = Vector2( 0.03, 0.03 )
+rect_pivot_offset = Vector2( 0.1, -0.5 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+disabled = true
+toggle_mode = true
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 15 )
+texture_hover = ExtResource( 16 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="CodeLabel" type="Label" parent="PatchAction" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 145.0
+margin_top = 175.0
+margin_right = 895.0
+margin_bottom = 475.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Patch"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect", "custom_fonts" ]
+
+[connection signal="pressed" from="CodeActionButton" to="." method="_on_CodeActionButton_pressed"]
+
+
