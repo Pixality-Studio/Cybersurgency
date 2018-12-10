@@ -8,7 +8,8 @@ signal unpress
 enum {IDLE, RESTING, MOVING, CODING, HURT, DEAD}
 var state #Current character state
 
-var target = self
+var target = self.position
+onready var root = get_node("/root/PlaySpace")
 
 #Holds all the stats for the character
 var stats = {"MoveSpeed": 5.0, #How fast does the character move
@@ -24,9 +25,6 @@ var stats = {"MoveSpeed": 5.0, #How fast does the character move
              "CodePower": 0.0 #How effective your code is
             }
 
-var beacon_entered = false
-
-
 func _ready():
 	change_state(IDLE)
 	emit_signal("hud_update", stats.StaminaMax, stats.StaminaLeft, stats.ProtectionMax, stats.ProtectionLeft, stats.AntiVirusProg)
@@ -37,37 +35,44 @@ func _physics_process(delta):
 	emit_signal("hud_update", stats.StaminaMax, stats.StaminaLeft, stats.ProtectionMax, stats.ProtectionLeft, stats.AntiVirusProg)
 	check_input()
 	
-	stats.Velocity = target.position - self.position  # gets the direction the npc is facing
+	stats.Velocity = target - self.position  # gets the direction the npc is facing
 	stats.NeededVel = sqrt(stats.Velocity.x * stats.Velocity.x + stats.Velocity.y * stats.Velocity.y)  # calculates how far away player is
 	if stats.NeededVel >= stats.Distance:  # determines if npc should move
 		stats.NeededVel = sqrt(stats.Velocity.x * stats.Velocity.x + stats.Velocity.y * stats.Velocity.y)
-	if beacon_entered:
-		stats.Velocity = Vector2(0,0)
 	move_and_slide(stats.Velocity, Vector2(0,0))
 
 func change_state(new_state):
 	state = new_state
 	match state:
 		IDLE:
-			pass
+			stats.Velocity = Vector2(0,0)
 		RESTING:
 			$ProtectionReplenish.stop()
+			emit_signal("unpress", "false", "true")
 		MOVING:
-			emit_signal("unpress", "true")
+			emit_signal("unpress", "true", "true")
 		CODING:
-			$RestReplenish.stop()
+			emit_signal("unpress", "true", "false")
 		HURT:
 			$RestReplenish.stop()
 			if stats.ProtectionLeft >= 0:
 				change_state(DEAD)
 		DEAD:
-			pass
+			print("Game Over")
 
 func check_input():
 	var one_shot = false #For timers that require to be one shot so they don't constantly restart
 	
 	var test = Input.is_action_just_pressed("test")
 	var action_ui = Input.is_action_just_pressed("show_actions")
+	var move = Input.is_mouse_button_pressed(2)
+	
+	if state == IDLE:
+		stats.Velocity = Vector2(0,0)
+	
+	if move and root.action_type == 0:
+		target = get_global_mouse_position()
+		change_state(MOVING)
 	
 	if stats.Velocity != Vector2(0,0):
 		change_state(MOVING)
@@ -75,18 +80,24 @@ func check_input():
 	if action_ui:
 		emit_signal("show_ui")
 
-#Handles start resting
-func _on_PersonalHud_resting(active):
-	if active == "true":
+func check_action(resting, anti_virus, framework, data_mine):
+	if resting == true:
 		$RestReplenish.start()
 		$ProtectionReplenish.stop()
 		change_state(RESTING)
 	else:
 		$RestReplenish.stop()
 		change_state(IDLE)
-
-func _on_PersonalHud_patching(active):
-	if active == "true":
+	
+	if anti_virus == true:
+		$AntiVirusProg.start()
+		$RestReplenish.stop()
+		change_state(CODING)
+	else:
+		$ProtectionReplenish.stop()
+		change_state(IDLE)
+	
+	if framework == true:
 		$ProtectionReplenish.start()
 		$RestReplenish.stop()
 		change_state(CODING)
@@ -111,18 +122,6 @@ func _on_ProtectionReplenish_timeout():
 		$ProtectionReplenish.stop()
 		change_state(IDLE)
 
-func _on_LocationBeacon_beacon_location(new_target):
-	target = new_target
-
 func _on_LocationBeacon_body_entered(body):
-	yield(get_tree().create_timer(2),"timeout")
-	stats.Velocity = Vector2(0,0)
 	change_state(IDLE)
-	beacon_entered = true
-
-func _on_LocationBeacon_beacon_enter():
-	beacon_entered = false
-
-
-
-
+	print("Target reached")

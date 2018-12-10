@@ -3,8 +3,16 @@ extends Node
 var can_zoom_in = true
 var can_zoom_out = true
 
+#0 = Movement | 1 = Interact
+var action_type = 0
+var mouse_active = true
+var one_shot = true
+
 func _process(delta):
 	check_camera()
+	if mouse_active == false and one_shot:
+		$MouseActive.start()
+		one_shot = false
 
 func check_camera():
 	if Input.is_action_just_pressed("scroll_down") and can_zoom_out:
@@ -36,3 +44,13 @@ func check_camera():
 		can_zoom_out = false
 	else:
 		can_zoom_out = true
+
+func mouse_command(type):
+	if type == 0:
+		action_type = 0
+	else:
+		action_type = 1
+	print(action_type)
+
+func _on_MouseActive_timeout():
+	mouse_active = true

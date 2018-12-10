@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Scripts/PlaySpace.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Scenes/Character.tscn" type="PackedScene" id=2]
@@ -9,6 +9,46 @@
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
+
+[sub_resource type="ParticlesMaterial" id=2]
+
+render_priority = 0
+trail_divisor = 1
+emission_shape = 2
+emission_box_extents = Vector3( 8, 8, 1 )
+flag_align_y = false
+flag_rotate_y = false
+flag_disable_z = true
+spread = 180.0
+flatness = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+initial_velocity_random = 0.0
+angular_velocity = 24.294
+angular_velocity_random = 0.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 0.0
+linear_accel_random = 0.0
+radial_accel = 0.0
+radial_accel_random = 0.0
+tangential_accel = 0.0
+tangential_accel_random = 0.0
+damping = 0.0
+damping_random = 0.0
+angle = 0.0
+angle_random = 0.0
+scale = 10.0
+scale_random = 0.0
+color = Color( 0.339844, 0.845276, 1, 1 )
+hue_variation = 0.0
+hue_variation_random = 0.0
+anim_speed = 0.0
+anim_speed_random = 0.0
+anim_offset = 0.0
+anim_offset_random = 0.0
+anim_loop = false
+_sections_unfolded = [ "Color", "Gravity", "Scale" ]
 
 [node name="PlaySpace" type="Node" index="0"]
 
@@ -27,6 +67,8 @@ transform = Transform2D( 3, 0, 0, 3, 962, 500 )
 
 [node name="LocationBeacon" type="Area2D" parent="." index="2"]
 
+position = Vector2( -19.5889, -19.5889 )
+scale = Vector2( 0.387846, 0.387846 )
 input_pickable = true
 gravity_vec = Vector2( 0, 0 )
 gravity = 0.0
@@ -41,20 +83,49 @@ _sections_unfolded = [ "Collision" ]
 
 shape = SubResource( 1 )
 
+[node name="Particles2D" type="Particles2D" parent="LocationBeacon" index="1"]
+
+emitting = false
+amount = 15
+lifetime = 4.0
+one_shot = true
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = true
+draw_order = 0
+process_material = SubResource( 2 )
+texture = null
+normal_map = null
+h_frames = 1
+v_frames = 1
+_sections_unfolded = [ "Process Material", "Time" ]
+
+[node name="MouseActive" type="Timer" parent="." index="3"]
+
+process_mode = 1
+wait_time = 0.5
+one_shot = false
+autostart = false
+
 [connection signal="hud_update" from="Character" to="PersonalHud" method="update_hud"]
 
 [connection signal="show_ui" from="Character" to="PersonalHud" method="show_ui"]
 
 [connection signal="unpress" from="Character" to="PersonalHud" method="unpress_button"]
 
+[connection signal="action_type" from="PersonalHud" to="." method="mouse_command"]
+
 [connection signal="patching" from="PersonalHud" to="Character" method="_on_PersonalHud_patching"]
 
 [connection signal="resting" from="PersonalHud" to="Character" method="_on_PersonalHud_resting"]
 
-[connection signal="beacon_enter" from="LocationBeacon" to="Character" method="_on_LocationBeacon_beacon_enter"]
-
-[connection signal="beacon_location" from="LocationBeacon" to="Character" method="_on_LocationBeacon_beacon_location"]
-
 [connection signal="body_entered" from="LocationBeacon" to="Character" method="_on_LocationBeacon_body_entered"]
+
+[connection signal="timeout" from="MouseActive" to="." method="_on_MouseActive_timeout"]
 
 
